@@ -1,5 +1,3 @@
-
-
 let productsHTML =  '';
 
 product.forEach((product) => {
