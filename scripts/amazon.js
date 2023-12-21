@@ -1,10 +1,10 @@
-import {cart } from '../data/cart.js';
-import {product} from '../data/products.js';
+import { cart ,addToCart} from '../data/cart.js';
+import { product } from '../data/products.js';
 
-let productsHTML =  '';
+let productsHTML = '';
 
 product.forEach((product) => {
-    productsHTML += `<div class="product-container">
+  productsHTML += `<div class="product-container">
     <div class="product-image-container">
       <img class="product-image"
         src="${product.image}">
@@ -14,14 +14,14 @@ product.forEach((product) => {
 
     <div class="product-rating-container">
       <img class="product-rating-stars"
-        src="images/ratings/rating-${product.rating.stars*10}.png">
+        src="images/ratings/rating-${product.rating.stars * 10}.png">
       <div class="product-rating-count link-primary">
         ${product.rating.count}
       </div>
     </div>
 
     <div class="product-price">
-      $${(product.priceCents/100).toFixed(2)}
+      $${(product.priceCents / 100).toFixed(2)}
     </div>
 
     <div class="product-quantity-container">
@@ -56,74 +56,66 @@ document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
 const addedMessageTimeouts = {};
 
+//function addToCart in cart.js
+function updateCartQuantity() {
+  let cartQuantity = 0;
+  cart.forEach(item => {
+    cartQuantity += item.quantity;
+  })
+  document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+}
 
 document.querySelectorAll('.js-add-to-cart')
-.forEach(button => {
-    button.addEventListener('click', ()=>{
-        //const productId = button.dataset.productId;
-        const {productId} = button.dataset;
-        const quantitySelector = document.querySelector(`.js-quantity-selector-${productId}`);
-        const quantity = Number(quantitySelector.value);
-        let matchingItem;
-        cart.forEach(item => {
-            if(productId === item.productId){
-                matchingItem = item;
-            }
-        });
-        if(matchingItem){
-            matchingItem.quantity += quantity;
-        }
-        else{
-            cart.push({
-                // productId : productId,
-                // quantity :quantity
-                productId,
-                quantity
-            });
-        }
-        let cartQuantity = 0;
-        cart.forEach(item => {
-            cartQuantity += item.quantity;
-        })
-        document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+  .forEach(button => {
+    button.addEventListener('click', () => {
+      //const productId = button.dataset.productId;
+      const { productId } = button.dataset;
+      
+      const quantitySelector = document.querySelector(`.js-quantity-selector-${productId}`);
+      
+      const quantity = Number(quantitySelector.value);
+      
+      addToCart(productId, quantity);
 
-        const addedMessage = document.querySelector(`.js-added-to-cart-${productId}`);
-        addedMessage.classList.add('show-added-to-cart');
+      updateCartQuantity();
 
-        //setTimeout(()=>{
+      const addedMessage = document.querySelector(`.js-added-to-cart-${productId}`);
+      addedMessage.classList.add('show-added-to-cart');
 
-        const previousTimeoutId = addedMessageTimeouts[productId];
-        if(previousTimeoutId){
-          clearTimeout(previousTimeoutId);
-        }
-        const timeoutId = setTimeout(() => {
-          addedMessage.classList.remove('show-added-to-cart');
-        },2000);
+      //setTimeout(()=>{
 
-        addedMessageTimeouts[productId] = timeoutId;
+      const previousTimeoutId = addedMessageTimeouts[productId];
+      if (previousTimeoutId) {
+        clearTimeout(previousTimeoutId);
+      }
+      const timeoutId = setTimeout(() => {
+        addedMessage.classList.remove('show-added-to-cart');
+      }, 2000);
+
+      addedMessageTimeouts[productId] = timeoutId;
     });
-});
+  });
 
 //another solution usong closure
 
 
-    // This solution uses a feature of JavaScript called a
-    // closure. Each time we run the loop, it will create
-    // a new variable called addedMessageTimeoutId and do
-    // button.addEventListener().
-    //
-    // Then, because of closure, the function we give to
-    // button.addEventListener() will get a unique copy
-    // of the addedMessageTimeoutId variable and it will
-    // keep this copy of the variable forever.
-    // (Reminder: closure = if a function has access to a
-    // value/variable, it will always have access to that
-    // value/variable).
-    //
-    // This allows us to create many unique copies of the
-    // addedMessageTimeoutId variable (one for every time
-    // we run the loop) so it lets us keep track of many
-    // timeoutIds (one for each product).
+// This solution uses a feature of JavaScript called a
+// closure. Each time we run the loop, it will create
+// a new variable called addedMessageTimeoutId and do
+// button.addEventListener().
+//
+// Then, because of closure, the function we give to
+// button.addEventListener() will get a unique copy
+// of the addedMessageTimeoutId variable and it will
+// keep this copy of the variable forever.
+// (Reminder: closure = if a function has access to a
+// value/variable, it will always have access to that
+// value/variable).
+//
+// This allows us to create many unique copies of the
+// addedMessageTimeoutId variable (one for every time
+// we run the loop) so it lets us keep track of many
+// timeoutIds (one for each product).
 //    let addedMessageTimeoutId;
 
 
