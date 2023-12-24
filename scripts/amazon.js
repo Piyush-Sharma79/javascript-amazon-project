@@ -4,6 +4,8 @@ import { formatCurrency } from './utils/money.js';
 
 let productsHTML = '';
 
+
+updateCartQuantity();
 product.forEach((product) => {
   productsHTML += `<div class="product-container">
     <div class="product-image-container">
