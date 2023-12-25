@@ -13,9 +13,9 @@ if(!cart){
 
 
 
+let matchingItem;
 
 export function addToCart(productId, quantity) {
-    let matchingItem;
     cart.forEach(item => {
       if (productId === item.productId) {
         matchingItem = item;
@@ -55,7 +55,7 @@ export function addToCart(productId, quantity) {
   }
 
   export function updateQuantity(productId, newQuantity){
-    let matchingItem;
+    let matchingItem = [];
     cart.forEach(cartItem => {
       if(productId === cartItem.product){
         matchingItem = cartItem;
