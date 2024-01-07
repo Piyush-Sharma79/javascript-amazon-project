@@ -44,11 +44,13 @@ export function addToCart(productId, quantity) {
   export function removeFromCart(productId) {
     const newCart = [];
 
-    cart.forEach(cartItem => {
+    for(const cartItem of cart){
+      () => {
       if(cartItem.productId !== productId){
         newCart.push(cartItem);
       }
-    });
+    }
+    }
 
     cart = newCart;
     saveToStorage();
