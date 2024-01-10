@@ -2,12 +2,11 @@
 // can put each value on a separate line to make
 // the code easier to read.
 import { cart, removeFromCart, updateQuantity,updateDeliveryOption } from '../../data/cart.js';
-import { product } from '../../data/products.js';
+import { product, getProduct } from '../../data/products.js';
 import { formatCurrency } from '../utils/money.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
-import { deliveryOptions } from '../../data/deliveryOptions.js';
+import { deliveryOptions ,getDeliveryOption } from '../../data/deliveryOptions.js';
 
-console.log(cart);
 export function updateCartQuantity1() {
     let cartQuantity1 = 0;
     cart.forEach(item => cartQuantity1 += item.quantity);
@@ -26,22 +25,9 @@ cart.forEach(cartItem => {
 
   const productId = cartItem.productId;
 
-  let matchingProduct;
-
-
-  product.forEach(product => {
-    if (product.id === productId) {
-      matchingProduct = product;
-    }
-  });
+  const matchingProduct = getProduct(productId);
   const deliveryOptionId = cartItem.deliveryOptionId;
-  let deliveryOption;
-
-  deliveryOptions.forEach(option => {
-    if (option.id === deliveryOptionId) {
-      deliveryOption = option;
-    }
-  });
+  const deliveryOption = getDeliveryOption(deliveryOptionId);
   
   const today = dayjs();
     const deliveryDate = today.add(
