@@ -58,7 +58,7 @@ product.forEach((product) => {
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
 const addedMessageTimeouts = {};
-
+console.log(cart);
 //function addToCart in cart.js
 function updateCartQuantity() {
   let cartQuantity = 0;
