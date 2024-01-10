@@ -1,11 +1,12 @@
 // Optional: when importing a lot of values, you
 // can put each value on a separate line to make
 // the code easier to read.
-import { cart, removeFromCart, updateQuantity } from '../data/cart.js';
+import { cart, removeFromCart, updateQuantity,updateDeliveryOption } from '../data/cart.js';
 import { product } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { deliveryOptions } from '../data/deliveryOptions.js';
+
 
 
 function updateCartQuantity1() {
@@ -24,6 +25,7 @@ cart.forEach(cartItem => {
 
   let matchingProduct;
 
+
   product.forEach(product => {
     if (product.id === productId) {
       matchingProduct = product;
@@ -31,14 +33,23 @@ cart.forEach(cartItem => {
   });
   const deliveryOptionId = cartItem.deliveryOptionId;
   let deliveryOption;
+
   deliveryOptions.forEach(option => {
-    if(option.id === deliveryOptionId){
+    if (option.id === deliveryOptionId) {
       deliveryOption = option;
     }
   });
+  
   const today = dayjs();
-  const deliveryDate = today.add(deliveryOption.deliveryDays,'days');
-  const dateString = deliveryDate.format('dddd,MMMM D');
+    const deliveryDate = today.add(
+      deliveryOption.deliveryDays,
+      'days'
+    );
+    const dateString = deliveryDate.format(
+      'dddd, MMMM D'
+    );
+
+
   cartSummaryHTML +=
     `<div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
     <div class="delivery-date">
@@ -93,7 +104,7 @@ function delivertOptionsHTML(matchingProduct,cartItem) {
     const priceString = deliveryOption.priceCents ===0?'FREE':`$${formatCurrency(deliveryOption.priceCents)}-`;
 
     const isChecked = deliveryOption.id === cartItem.deliveryOptionId;
-    html += `<div class="delivery-option">
+    html += `<div class="delivery-option js-delivery-option" data-product-id = "${matchingProduct.id}" data-delivery-option-id ="${deliveryOption.id}">
       <input type="radio" ${isChecked ? 'checked':''}
         class="delivery-option-input"
         name="delivery-option-${matchingProduct.id}">
@@ -176,4 +187,18 @@ document.querySelectorAll('.js-save-link')
       updateCartQuantity1();
     });
   });
+
+  document.querySelectorAll('.js-delivery-option')
+    .forEach((element) => {
+      element.addEventListener('click', () => {
+        const {productId, deliveryOptionId} = element.dataset;
+        updateDeliveryOption(productId, deliveryOptionId);
+      });
+    });
+
+
+
+
+  
+
 

@@ -15,9 +15,10 @@ if(!cart){
 
 
 
-let matchingItem;
+
 
 export function addToCart(productId, quantity) {
+  let matchingItem;
     cart.forEach(item => {
       if (productId === item.productId) {
         matchingItem = item;
@@ -30,9 +31,8 @@ export function addToCart(productId, quantity) {
       cart.push({
         // productId : productId,
         // quantity :quantity
-        productId,
-        quantity, 
-        deliveryOptionId:'1'
+        productId:productId,
+        quantity:1,
       });
 
       saveToStorage();
@@ -71,3 +71,15 @@ export function addToCart(productId, quantity) {
     saveToStorage();
   }
 
+ export function updateDeliveryOption(productId,deliveryOptionId){
+  let matchingItem;
+  cart.forEach(cartItem => {
+    if (productId === cartItem.productId) {
+      matchingItem = cartItem;
+    }
+  });
+
+  matchingItem.deliveryOptionId = deliveryOptionId;
+
+  saveToStorage();
+}

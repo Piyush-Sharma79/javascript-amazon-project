@@ -8,9 +8,9 @@ let productsHTML = '';
 updateCartQuantity();
 product.forEach((product) => {
   productsHTML += `<div class="product-container">
-    <div class="product-image-container">
-      <img class="product-image"
-        src="${product.image}">
+  <div class="product-image-container">
+  <img class="product-image"
+  src="${product.image}">
     </div>
 
     <div class="product-name limit-text-to-2-lines">${product.name}</div>
