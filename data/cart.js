@@ -14,9 +14,6 @@ if(!cart){
 }
 
 
-
-
-
 export function addToCart(productId, quantity) {
   let matchingItem;
     cart.forEach(item => {

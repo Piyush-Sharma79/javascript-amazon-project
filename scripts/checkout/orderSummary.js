@@ -9,9 +9,9 @@ import { deliveryOptions ,getDeliveryOption } from '../../data/deliveryOptions.j
 import { renderPaymentSummary } from './paymentSummary.js';
 
 export function updateCartQuantity1() {
-    let cartQuantity1 = 0;
-    cart.forEach(item => cartQuantity1 += item.quantity);
-    document.querySelector('.js-checkout-quantity').innerHTML = `${cartQuantity1} items`;
+  let cartQuantity1 = 0;
+  cart.forEach(item => cartQuantity1 += item.quantity);
+  document.querySelector('.js-checkout-quantity').innerHTML = `${cartQuantity1} items`;
 }
 
 
@@ -119,10 +119,7 @@ document.querySelectorAll('.js-delete-link')
     link.addEventListener('click', () => {
       const productId = link.dataset.productId;
       removeFromCart(productId);
-
-      const container = document.querySelector(`.js-cart-item-container-${productId}`);
-      container.remove();
-
+      renderOrderSummary();
       updateCartQuantity1();
       renderPaymentSummary();
     });
