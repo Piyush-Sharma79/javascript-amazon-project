@@ -14,7 +14,7 @@ export function updateCartQuantity1() {
   document.querySelector('.js-checkout-quantity').innerHTML = `${cartQuantity1} items`;
 }
 
-
+     
 const today = dayjs();
 const delivertDate = today.add(7, 'days');
 delivertDate.format('dddd,MMMM D');
@@ -76,7 +76,7 @@ cart.forEach(cartItem => {
     </div>
   </div>`;
 });
-
+7
 function delivertOptionsHTML(matchingProduct,cartItem) {
   let html = '';
   deliveryOptions.forEach(deliveryOption => {
