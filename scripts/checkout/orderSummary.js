@@ -8,11 +8,11 @@ import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { deliveryOptions ,getDeliveryOption ,calculateDeliveryDate} from '../../data/deliveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
 //this test might be failing because of my custom update cartQuantity function.
-// export function updateCartQuantity1() {
-//   let cartQuantity1 = 0;
-//   cart.forEach(item => cartQuantity1 += item.quantity);
-//   document.querySelector('.js-checkout-quantity').innerHTML = `${cartQuantity1} items`;
-// }
+export function updateCartQuantity1() {
+  let cartQuantity1 = 0;
+  cart.forEach(item => cartQuantity1 += item.quantity);
+  document.querySelector('.js-checkout-quantity').innerHTML = `${cartQuantity1} items`;
+}
 
      
 const today = dayjs();
@@ -111,7 +111,7 @@ document.querySelectorAll('.js-delete-link')
       const productId = link.dataset.productId;
       removeFromCart(productId);
       renderOrderSummary();
-      //updateCartQuantity1();
+      updateCartQuantity1();
       renderPaymentSummary();
     });
   });
@@ -129,7 +129,7 @@ document.querySelectorAll('.js-update-link')
   });
 
 
-//updateCartQuantity1();
+updateCartQuantity1();
 
 document.querySelectorAll('.js-save-link')
   .forEach((link) => {
@@ -163,8 +163,8 @@ document.querySelectorAll('.js-save-link')
 
       const quantityLabel = document.querySelector(`.js-quantity-label-${productId}`);
       quantityLabel.innerHTML = newQuantity;
-      //updateCartQuantity1();
-    });
+      updateCartQuantity1();
+    })
   });
 
   document.querySelectorAll('.js-delivery-option')
