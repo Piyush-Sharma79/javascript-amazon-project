@@ -7,12 +7,12 @@ import { formatCurrency } from '../utils/money.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { deliveryOptions ,getDeliveryOption ,calculateDeliveryDate} from '../../data/deliveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
-
-export function updateCartQuantity1() {
-  let cartQuantity1 = 0;
-  cart.forEach(item => cartQuantity1 += item.quantity);
-  document.querySelector('.js-checkout-quantity').innerHTML = `${cartQuantity1} items`;
-}
+//this test might be failing because of my custom update cartQuantity function.
+// export function updateCartQuantity1() {
+//   let cartQuantity1 = 0;
+//   cart.forEach(item => cartQuantity1 += item.quantity);
+//   document.querySelector('.js-checkout-quantity').innerHTML = `${cartQuantity1} items`;
+// }
 
      
 const today = dayjs();
@@ -34,7 +34,7 @@ cart.forEach(cartItem => {
   const dateString = calculateDeliveryDate(deliveryOption);
 
   cartSummaryHTML +=
-    `<div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
+    `<div class="cart-item-container js-cart-item-container js-cart-item-container-${matchingProduct.id}">
     <div class="delivery-date">
       Delivery date: ${dateString}
     </div>
@@ -50,7 +50,7 @@ cart.forEach(cartItem => {
         <div class="product-price">
           $${formatCurrency(matchingProduct.priceCents)}
         </div>
-        <div class="product-quantity">
+        <div class="product-quantity js-product-quantity-${matchingProduct.id}">
           <span>
             Quantity: <span class="quantity-label js-quantity-label-${matchingProduct.id}">${cartItem.quantity}</span>
           </span>
@@ -62,7 +62,7 @@ cart.forEach(cartItem => {
               data-product-id="${matchingProduct.id}">
               Save
           </span>
-          <span class="delete-quantity-link link-primary js-delete-link" data-product-id = "${matchingProduct.id}">
+          <span class="delete-quantity-link js-delete-link-${matchingProduct.id} link-primary js-delete-link js" data-product-id = "${matchingProduct.id}">
             Delete
           </span>
         </div>
@@ -111,7 +111,7 @@ document.querySelectorAll('.js-delete-link')
       const productId = link.dataset.productId;
       removeFromCart(productId);
       renderOrderSummary();
-      updateCartQuantity1();
+      //updateCartQuantity1();
       renderPaymentSummary();
     });
   });
@@ -129,7 +129,7 @@ document.querySelectorAll('.js-update-link')
   });
 
 
-updateCartQuantity1();
+//updateCartQuantity1();
 
 document.querySelectorAll('.js-save-link')
   .forEach((link) => {
@@ -163,7 +163,7 @@ document.querySelectorAll('.js-save-link')
 
       const quantityLabel = document.querySelector(`.js-quantity-label-${productId}`);
       quantityLabel.innerHTML = newQuantity;
-      updateCartQuantity1();
+      //updateCartQuantity1();
     });
   });
 
