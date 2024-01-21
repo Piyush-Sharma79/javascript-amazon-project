@@ -1,3 +1,4 @@
+import { getDeliveryOption } from "./deliveryOptions.js";
 export let cart 
 
 loadFromStorage();
@@ -70,8 +71,8 @@ export function addToCart(productId, quantity) {
         matchingItem = cartItem;
       }
     });
-
-    matchingItem.quantity = newQuantity;
+    
+       matchingItem.quantity = newQuantity;
     saveToStorage();
   }
 
@@ -82,6 +83,14 @@ export function addToCart(productId, quantity) {
       matchingItem = cartItem;
     }
   });
+   if (!matchingItem) {
+      return;
+    }
+    const deliveryOption = getDeliveryOption(deliveryOptionId);
+    if(!deliveryOption){
+      return;
+    }
+
 
   matchingItem.deliveryOptionId = deliveryOptionId;
 
